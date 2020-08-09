@@ -7,6 +7,7 @@ const Strategy = require("passport-local").Strategy;
 const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const jwt = require("jsonwebtoken");
+const tokenVerify = require("./tokenVerify");
 
 require("dotenv").config();
 
@@ -16,8 +17,9 @@ passport.use(
     {
       usernameField: "email",
       passwordField: "password",
+      passReqToCallback: true,
     },
-    async (email, password, done) => {
+    async (req, email, password, done) => {
       try {
         const userInfo = await User.find({ email: email });
         if (!userInfo) return done(null, false);
@@ -39,14 +41,21 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(passport.initialize());
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
-}
+app.use(express.static(path.join(__dirname, "client/build")));
 
 //routes
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "build/index.html"));
+});
+
+app.get("/api/profile", tokenVerify, async (req, res) => {
+  console.log(req.user);
+  try {
+    const data = await User.findOne({ _id: req.user._id });
+    res.send(data);
+  } catch (error) {
+    console.log(err);
+  }
 });
 
 //register
@@ -56,7 +65,6 @@ app.post("/register", async (req, res) => {
 
   bcrypt.genSalt(10, function (err, salt) {
     bcrypt.hash(req.body.password, 5, function (err, hash) {
-      console.log(hash);
       let newUser = new User({
         email: req.body.email,
         password: hash,
@@ -76,7 +84,7 @@ app.post(
   "/login",
   passport.authenticate("local", { session: false }),
   (req, res) => {
-    const token = jwt.sign({ id: req.user._id }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ _id: req.user[0]._id }, process.env.TOKEN_SECRET);
     res.cookie("token", token).send("success");
   }
 );
