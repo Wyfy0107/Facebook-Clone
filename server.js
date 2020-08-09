@@ -43,7 +43,7 @@ app.use(express.static(path.join(__dirname, "client/build")));
 
 //routes
 app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "client/build/index.html"));
+  res.sendFile(path.join(__dirname, "/server/client/build/index.html"));
 });
 
 //register
