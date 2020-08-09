@@ -9,7 +9,7 @@ function Profile({ setAuth }) {
       .get("/api/profile")
       .then(res => setUserInfo(res.data))
       .catch(err => console.log(err));
-  });
+  }, []);
 
   const logOut = () => {
     setAuth(false);
