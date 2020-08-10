@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 function Register() {
   const [email, setEmail] = useState(null);
@@ -39,6 +39,8 @@ function Register() {
       />
       <br />
       <button onClick={register}>Register</button>
+      <br />
+      <Link to='/'>Login</Link>
     </div>
   );
 }
