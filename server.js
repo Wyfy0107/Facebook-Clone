@@ -44,8 +44,8 @@ app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, "client/build")));
 
 //routes
-app.get("/", (req, res) => {
-  res.sendFile(path.join(__dirname, "build/index.html"));
+app.get("*", (req, res) => {
+  res.redirect("/");
 });
 
 app.get("/api/profile", tokenVerify, async (req, res) => {
