@@ -44,18 +44,18 @@ app.use(passport.initialize());
 app.use(express.static(path.join(__dirname, "client/build")));
 
 //routes
-app.get("*", (req, res) => {
-  res.redirect("/");
-});
 
 app.get("/api/profile", tokenVerify, async (req, res) => {
-  console.log(req.user);
   try {
     const data = await User.findOne({ _id: req.user._id });
     res.send(data);
   } catch (error) {
     console.log(err);
   }
+});
+
+app.get("*", (req, res) => {
+  res.redirect("/");
 });
 
 //register

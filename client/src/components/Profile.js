@@ -8,7 +8,10 @@ function Profile({ setAuth }) {
     axios
       .get("/api/profile")
       .then(res => setUserInfo(res.data))
-      .catch(err => console.log(err));
+      .catch(err => {
+        setAuth(false);
+        alert("please login again");
+      });
   }, []);
 
   const logOut = () => {
