@@ -16,6 +16,10 @@ function Profile({ setAuth }) {
 
   const logOut = () => {
     setAuth(false);
+    axios
+      .post("/logout")
+      .then(res => console.log(res))
+      .catch(err => console.log(err));
   };
 
   return (

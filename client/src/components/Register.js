@@ -1,29 +1,31 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
-function Login({ setAuth }) {
+function Register() {
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
+  const [isRegister, setRegister] = useState(false);
 
-  const login = () => {
+  const register = () => {
     if (!email && !password) return alert("please fill in email and password");
-
     axios
-      .post("/login", {
+      .post("/register", {
         email: email,
         password: password,
       })
       .then(res => {
-        if (res.data === "success") {
-          setAuth(true);
-        }
+        alert("success");
+        setRegister(true);
       })
-      .catch(err => console.log(err));
+      .catch(err => alert(err.message));
   };
 
-  return (
+  return isRegister ? (
+    <Redirect to='/' />
+  ) : (
     <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <input
         type='text'
         placeholder='email'
@@ -36,9 +38,9 @@ function Login({ setAuth }) {
         onChange={e => setPassword(e.target.value)}
       />
       <br />
-      <button onClick={login}>Login</button>
+      <button onClick={register}>Register</button>
     </div>
   );
 }
 
-export default Login;
+export default Register;

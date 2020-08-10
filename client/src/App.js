@@ -3,6 +3,7 @@ import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/Login";
 import Profile from "./components/Profile";
+import Register from "./components/Register";
 
 function App() {
   const [isAuthenticated, setAuthenticate] = useState(false);
@@ -34,6 +35,10 @@ function App() {
           ) : (
             <Redirect to='/' />
           )}
+        </Route>
+
+        <Route path='/register'>
+          <Register />
         </Route>
       </Switch>
     </div>
