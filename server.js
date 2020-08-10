@@ -92,7 +92,7 @@ app.post(
 //log out
 app.post("/logout", (req, res) => {
   req.logout();
-  res.redirect("https://auth-react-test.herokuapp.com/");
+  res.clearCookie("token").send("logged out");
 });
 
 //db connection
