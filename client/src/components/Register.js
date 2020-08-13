@@ -1,6 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Redirect, Link } from "react-router-dom";
+import styled from "styled-components";
+import Button from "react-bootstrap/Button";
+
+const RegisterForm = styled.div`
+  position: relative;
+  top: 3rem;
+`;
+
+const Input = styled.input`
+  border-radius: 6px;
+  outline: none;
+  height: 3rem;
+  width: 15rem;
+`;
 
 function Register() {
   const [email, setEmail] = useState(null);
@@ -24,24 +38,26 @@ function Register() {
   return isRegister ? (
     <Redirect to='/' />
   ) : (
-    <div>
+    <RegisterForm>
       <h1>Register</h1>
-      <input
+      <Input
         type='text'
         placeholder='email'
         onChange={e => setEmail(e.target.value)}
       />
       <br />
-      <input
+      <Input
         type='password'
         placeholder='password'
         onChange={e => setPassword(e.target.value)}
       />
       <br />
-      <button onClick={register}>Register</button>
+      <Button style={{ margin: "5px" }} onClick={register}>
+        Register
+      </Button>
       <br />
       <Link to='/'>Login</Link>
-    </div>
+    </RegisterForm>
   );
 }
 

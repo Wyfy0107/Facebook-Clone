@@ -1,6 +1,20 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import Button from "react-bootstrap/Button";
+
+const Input = styled.input`
+  border-radius: 6px;
+  outline: none;
+  height: 3rem;
+  width: 15rem;
+`;
+
+const LoginForm = styled.div`
+  position: relative;
+  top: 3rem;
+`;
 
 function Login({ setAuth }) {
   const [email, setEmail] = useState(null);
@@ -23,24 +37,26 @@ function Login({ setAuth }) {
   };
 
   return (
-    <div>
+    <LoginForm>
       <h1>Login</h1>
-      <input
+      <Input
         type='text'
         placeholder='email'
         onChange={e => setEmail(e.target.value)}
       />
       <br />
-      <input
+      <Input
         type='password'
         placeholder='password'
         onChange={e => setPassword(e.target.value)}
       />
       <br />
-      <button onClick={login}>Login</button>
+      <Button style={{ margin: "5px" }} onClick={login}>
+        Login
+      </Button>
       <br />
       <Link to='/register'>Register</Link>
-    </div>
+    </LoginForm>
   );
 }
 
