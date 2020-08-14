@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Route, Switch, Redirect } from "react-router-dom";
 import Login from "./components/Login";
-import Profile from "./components/Profile";
 import Register from "./components/Register";
+import Layout from "./components/protected-routes/Layout";
 
 function App() {
-  const [isAuthenticated, setAuthenticate] = useState(false);
+  const [isAuthenticated, setAuthenticate] = useState(true);
 
   useEffect(() => keepLoggedIn(), []);
 
   const keepLoggedIn = () => {
     const cookie = document.cookie;
     const token = cookie.split("=")[1];
-    if (token) {
-      setAuthenticate(true);
+    if (!token) {
+      setAuthenticate(false);
     }
   };
 
@@ -23,15 +23,15 @@ function App() {
       <Switch>
         <Route exact path='/'>
           {isAuthenticated ? (
-            <Redirect to='/profile' />
+            <Redirect to='/dashboard' />
           ) : (
             <Login setAuth={setAuthenticate} />
           )}
         </Route>
 
-        <Route path='/profile'>
+        <Route path='/dashboard'>
           {isAuthenticated ? (
-            <Profile setAuth={setAuthenticate} />
+            <Layout setAuth={setAuthenticate} />
           ) : (
             <Redirect to='/' />
           )}

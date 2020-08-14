@@ -3,9 +3,9 @@ import axios from "axios";
 import Nav from "react-bootstrap/Nav";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
-import { GET_USER_POSTS, ADD_POST } from "../graphQL/Operation";
+import { GET_USER_POSTS, ADD_POST } from "../../graphQL/Operation";
 import { useLazyQuery, useMutation } from "@apollo/client";
-import PostLayout from "./post-layout/PostLayout";
+import PostLayout from "../post-layout/PostLayout";
 
 const PostSection = styled.div`
   background: #242526;
