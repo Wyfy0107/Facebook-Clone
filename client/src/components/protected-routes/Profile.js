@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import Nav from "react-bootstrap/Nav";
 import styled from "styled-components";
 import Button from "react-bootstrap/Button";
 import { GET_USER_POSTS, ADD_POST } from "../../graphQL/Operation";
@@ -75,27 +74,6 @@ function Profile({ setAuth }) {
 
   return (
     <div>
-      <Nav
-        style={{
-          background: "#242526",
-          height: "8vh",
-          alignItems: "center",
-          fontSize: "1.5rem",
-        }}
-        className='justify-content-center'
-        activeKey='/home'
-      >
-        <Nav.Item>
-          <Nav.Link href='/home'>Posts</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey='link-1'>Profile</Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey='link-2'>Market Place</Nav.Link>
-        </Nav.Item>
-      </Nav>
-
       <div
         style={{
           display: "flex",

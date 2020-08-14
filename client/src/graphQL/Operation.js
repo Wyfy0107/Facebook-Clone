@@ -13,6 +13,24 @@ export const GET_USER_POSTS = gql`
   }
 `;
 
+export const GET_ALL_POSTS = gql`
+  query GET_ALL_POSTS {
+    posts {
+      id
+      email
+      content
+    }
+  }
+`;
+
+export const GET_LIKE = gql`
+  query GET_LIKE($id: String) {
+    likes(id: $id) {
+      likes
+    }
+  }
+`;
+
 //Mutation
 export const ADD_POST = gql`
   mutation addPost($email: String, $content: String) {
@@ -25,6 +43,14 @@ export const ADD_POST = gql`
 export const DELETE_POST = gql`
   mutation DELETE_POST($id: String) {
     deletePost(id: $id) {
+      id
+    }
+  }
+`;
+
+export const UPDATE_LIKE = gql`
+  mutation UPDATE_LIKE($id: String, $amount: Int) {
+    updateLike(id: $id, amount: $amount) {
       id
     }
   }
