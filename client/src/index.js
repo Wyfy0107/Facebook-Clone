@@ -19,7 +19,7 @@ const httpLink = new HttpLink({
 });
 
 const wsLink = new WebSocketLink({
-  uri: `ws://auth-react-graphql.herokuapp.com/`,
+  uri: `WSS://auth-react-graphql.herokuapp.com/`,
   options: {
     reconnect: true,
   },
