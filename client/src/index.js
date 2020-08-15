@@ -15,11 +15,11 @@ import { split, HttpLink } from "@apollo/client";
 import { getMainDefinition } from "@apollo/client/utilities";
 
 const httpLink = new HttpLink({
-  uri: "http://localhost:7000/graphql",
+  uri: "https://lucasconstantino.github.io/graphiql-online/",
 });
 
 const wsLink = new WebSocketLink({
-  uri: `ws://localhost:7000/graphql`,
+  uri: `ws://lucasconstantino.github.io/graphiql-online/`,
   options: {
     reconnect: true,
   },
