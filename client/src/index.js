@@ -15,11 +15,11 @@ import { split, HttpLink } from "@apollo/client";
 import { getMainDefinition } from "@apollo/client/utilities";
 
 const httpLink = new HttpLink({
-  uri: "https://lucasconstantino.github.io/graphiql-online/",
+  uri: "https://auth-react-graphql.herokuapp.com/",
 });
 
 const wsLink = new WebSocketLink({
-  uri: `ws://lucasconstantino.github.io/graphiql-online/`,
+  uri: `ws://auth-react-graphql.herokuapp.com/`,
   options: {
     reconnect: true,
   },
