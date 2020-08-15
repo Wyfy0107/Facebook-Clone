@@ -34,7 +34,10 @@ function Profile({ setAuth }) {
   useEffect(() => {
     getUserProfile();
     if (userEmail) {
-      getUserPosts({ variables: { email: userEmail } });
+      getUserPosts({
+        variables: { email: userEmail },
+        fetchPolicy: "no-cache",
+      });
     }
   }, [userEmail]);
 
@@ -58,13 +61,11 @@ function Profile({ setAuth }) {
     }
   };
 
-  // const logOut = () => {
-  //   setAuth(false);
-  //   axios
-  //     .post("/logout")
-  //     .then(res => console.log(res))
-  //     .catch(err => console.log(err));
-  // };
+  const logOut = () => {
+    setAuth(false);
+    axios.post("/logout").catch(err => console.log(err));
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -85,7 +86,16 @@ function Profile({ setAuth }) {
           <PostSection>
             <PostInput onChange={e => setPostContent(e.target.value)} />
             <br />
-            <Button onClick={add}>Post</Button>
+            <div
+              style={{
+                display: "flex",
+                flexFlow: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Button onClick={add}>Post</Button>
+              <Button onClick={logOut}>Log out</Button>
+            </div>
           </PostSection>
         </div>
 

@@ -27,9 +27,6 @@ function Layout({ setAuth }) {
             Profile
           </Link>
         </Nav.Item>
-        <Nav.Item>
-          <Link style={{ margin: "1rem" }}>Market Place</Link>
-        </Nav.Item>
       </Nav>
 
       <Switch>

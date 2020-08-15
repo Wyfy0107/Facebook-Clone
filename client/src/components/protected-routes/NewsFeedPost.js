@@ -1,41 +1,48 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { DELETE_POST, UPDATE_LIKE, GET_LIKE } from "../../graphQL/Operation";
-import { useMutation, useQuery } from "@apollo/client";
+import { GET_LIKE, UPDATE_LIKE, GET_COMMENT } from "../../graphQL/Operation";
+import { useQuery, useMutation } from "@apollo/client";
 import Button from "react-bootstrap/Button";
+import Comment from "../comment-component/Comment";
 
 const PostWrapper = styled.div`
   display: flex;
   flex-flow: column;
   background: #242526;
-  width: 25vw;
+  width: 32vw;
   margin: 1rem auto 1rem;
   border-radius: 10px;
   padding: 5px;
 `;
 
-function Post({ post, posts, email, setPosts }) {
-  const [deletePost] = useMutation(DELETE_POST);
+function NewsFeedPost({ post }) {
+  const [likes, setLikes] = useState(0);
+  const [commentArray, setComment] = useState(null);
+  const [showComment, setShow] = useState(false);
+
+  //query
   const { data: likeNumber } = useQuery(GET_LIKE, {
     variables: { id: post.id },
     fetchPolicy: "no-cache",
   });
+
+  const { data: comments } = useQuery(GET_COMMENT, {
+    variables: { id: post.id },
+    fetchPolicy: "no-cache",
+  });
+
+  //mutation
   const [updateLike] = useMutation(UPDATE_LIKE);
 
-  const [likes, setLikes] = useState(0);
-
   useEffect(() => {
-    if (likeNumber && likeNumber.likes.length !== 0) {
+    if (likeNumber) {
       setLikes(likeNumber.likes[0].likes);
     }
-  }, [likeNumber]);
 
-  const del = id => {
-    const copy = [...posts];
-    let deletedPostIndex = copy.findIndex(post => post.id === id);
-    copy.splice(deletedPostIndex, 1);
-    setPosts(copy);
-  };
+    if (comments && comments.commentList) {
+      setComment(comments.commentList.commentList);
+    }
+  }, [likeNumber, comments]);
 
   const likeHandler = () => {
     setLikes(
@@ -47,7 +54,7 @@ function Post({ post, posts, email, setPosts }) {
   return (
     <div>
       <PostWrapper key={post.id}>
-        <h4>{email}</h4>
+        <h4>{post.email}</h4>
         <p>{post.content}</p>
         <div
           style={{
@@ -63,20 +70,22 @@ function Post({ post, posts, email, setPosts }) {
           <Button
             size='sm'
             style={{ width: "20%" }}
-            onClick={() => {
-              deletePost({
-                variables: { id: post.id },
-                fetchPolicy: "no-cache",
-              });
-              del(post.id);
-            }}
+            onClick={() => setShow(!showComment)}
           >
-            Delete
+            Comments
           </Button>
+        </div>
+        <div style={{ display: showComment ? "block" : "none" }}>
+          <hr style={{ backgroundColor: "white", width: "80%" }} />
+          <Comment
+            postId={post.id}
+            commentList={commentArray}
+            style={{ height: "100%" }}
+          />
         </div>
       </PostWrapper>
     </div>
   );
 }
 
-export default Post;
+export default NewsFeedPost;
